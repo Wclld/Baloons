@@ -5,12 +5,14 @@ using UnityEngine;
 public class Baloons : MonoBehaviour
 {
 	[SerializeField] uint _baloonsCount;
-	[SerializeField] float	_xSpawnOffset;
+	[SerializeField] float _xSpawnOffset;
 	[SerializeField] float _moveSpeed;
 	[SerializeField] GameObject _baloonPrefab;
+	private bool _onPause;
 	private Stack<GameObject> _baloonPool = new Stack<GameObject>();
 	private List<GameObject> _baloonsOnScene = new List<GameObject>();
 	private Vector2 _screenSize;
+
 
 	private void Awake() 
 	{
@@ -27,8 +29,16 @@ public class Baloons : MonoBehaviour
 	{
 		if(_baloonPool != null)
 		{
-			MoveBaloons();
+			if(!_onPause)
+			{
+				MoveBaloons();
+			}
 		}
+	}
+
+	public void SetOnPause(bool onPause)
+	{
+		_onPause = onPause;
 	}
 
 	private void MoveBaloons()
